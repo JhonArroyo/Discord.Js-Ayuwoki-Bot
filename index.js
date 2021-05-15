@@ -10,6 +10,9 @@ import * as ytdl from 'ytdl-core'
 import * as fs from 'fs'
 
 const client = new Discord.Client();
+
+
+/** Bloque de reaccion de respuesta del bot */
 function random_item(items)
 {
   
@@ -23,18 +26,37 @@ const items = [
   "Porque no dejan descansar...diosss"
 ]; 
 
+/** Bloque random NFSW  del bot */
+function random_image(itemx)
+{
+  
+return itemx[Math.floor(Math.random()*itemx.length)];
+     
+}
+
+const itemx = [
+  "https://i.imgur.com/o9hA330.png",
+  "https://i.imgur.com/VzVHTTG.gif"
+]; 
+
+
 
 /** Bloque de reaccion de respuesta del bot */
-
 client.on('ready', () => {
+  setInterval(() => {
+    var solitochannel = client.channels.cache.get('672441940675002407');
+    const mention_init = '@everyone' 
+    const text = 'NO SE HAGAN LA PAJA CHICOS QUE ESO ES MALO.....ATT: EDGAR';
+    solitochannel.send(mention_init + text)
+  }, 21600*1000);
+
   console.log(`Conectado como ${client.user.tag}!`);
 });
 
 /* Si el mensaje en el chat coincide con lo asignado dentro de la condicional el bot efectuará una respuesta hacia el usuario quien dijo el Keyword */
 client.on('message', msg => {
   if (msg.content === 'ya duermanse' || msg.content === 'Ya duermanse' || msg.content === 'Ya Duermanse' || msg.content === 'YA DUERMANSE' || msg.content === 'ya duermase' || msg.content === 'Ya duermase' || msg.content === 'Ya Duermase' || msg.content === 'YA DUERMASE')  {
-    console.log(random_item(items)); // DEBUG
-    msg.reply(random_item(items));
+      msg.reply(random_item(items));
   }
 });
 
@@ -55,7 +77,7 @@ client.on('message', async message => {
   if (message.content === 'sacate alv') {
     if (message.member.voice.channel) {
       message.reply('HE HE');
-      const connection = await message.member.voice.channel.leave();
+      const connection_leave = await message.member.voice.channel.leave();
     } else {
       message.reply('Al menos dimelo cuando estemos dentro del canal de voz');
     }
@@ -76,10 +98,14 @@ client.on('message', message => {
     message.reply('Hay te va');
     message.reply('Que opinas?');
     message.channel.send(attachment);
+  } else if (message.content === 'Ayuwoki sacate algo de lo qu tu sabes....') {
+      let url_pass = random_image(itemx);
+      const attachment_nfsw = new Discord.MessageAttachment(url_pass);
+      message.reply('Yo no se de que me estas hablando.....ahhh ya...... lo que sabemos');
+      message.reply('Hay te va pues');
+      message.channel.send(attachment_nfsw);  
   }
 });
 
 
-
-
-client.login();
+client.login('ODQyODU5NTg1NDY3NzExNDg4.YJ7cKA.SIkFNgRZGn6Z4Y6umKaTVWE7KTs');
