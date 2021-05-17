@@ -1,114 +1,98 @@
-/** 
- *          AYUWOKI BOT 
- *      AUTHOR : wHITELOTUS 
- *      DATE   : 14-05-2021-01-44-00
- * 
-*/
+const express = require('express');
+const app = express();
+ 
+app.get('/', (req, res) => {
+  res.send('Hello Express app!')
+});
+ 
+app.listen(3000, () => {
+  console.log('server started');
+});
 
-import * as Discord from 'discord.js'
-import * as ytdl from 'ytdl-core'
-import * as fs from 'fs'
+const Discord = require('discord.js');
 
 const client = new Discord.Client();
 
 
-/** Bloque de reaccion de respuesta del bot */
-function random_item(items)
-{
-  
-return items[Math.floor(Math.random()*items.length)];
-     
+const mySecret = process.env['token']
+
+const prefix = '.';
+
+const fs = require('fs');
+
+client.commands = new Discord.Collection();
+
+const commandFiles = fs.readdirSync('./comandos').filter(file => file.endsWith('.js'));
+for(const file of commandFiles){
+    const command = require(`./comandos/${file}`);
+    
+    client.commands.set(command.name, command);
+    
 }
 
-const items = [
-  "Porque a esta hora sale el ayuwoki...xD",
-  "Porque ya me tienen podrido con sus comandos",
-  "Porque no dejan descansar...diosss"
-]; 
 
-/** Bloque random NFSW  del bot */
-function random_image(itemx)
-{
-  
-return itemx[Math.floor(Math.random()*itemx.length)];
-     
-}
-
-const itemx = [
-  "https://i.imgur.com/o9hA330.png",
-  "https://i.imgur.com/VzVHTTG.gif",
-  "https://img.wattpad.com/cover/81461955-512-k104018.jpg",
-  "https://i.imgur.com/9DhvFAs.jpeg"
-]; 
-
-
-
-/** Bloque de reaccion de respuesta del bot */
-client.on('ready', () => {
+client.once('ready', () => {
+  /** Bloque interno de mencion @everyone por DREYG */
   setInterval(() => {
     var solitochannel = client.channels.cache.get('672441940675002407');
     const mention_init = '@everyone' 
-    const text = 'NO SE HAGAN LA PAJA CHICOS QUE ESO ES MALO.....ATT: EDGAR';
+    const text = '_NO SE HAGAN LA PAJA CHICOS QUE ESO ES MALO.....ATT: EDGAR_<:peepoPANTIES:672448870218989577>';
     solitochannel.send(mention_init + text)
   }, 21600*1000);
 
+  /** Bloque interno de mencion @everyone pora  recordar el uso del comando personalizado de help*/
+  setInterval(() => {                                 
+    var solitochannel_hep = client.channels.cache.get('843623327904956436');
+    const mention_help = '@everyone' 
+    const text_help = '_Si se te olvido de como pedirme ayuda para saber como hablarme tan solo escribeme el siguiente comando **.comandos** y yo te arrojaré el listado...ATT: OBO_';
+    solitochannel_hep.send(mention_help + text_help)
+  }, 1800*1000);
+
   console.log(`Conectado como ${client.user.tag}!`);
-});
-
-/* Si el mensaje en el chat coincide con lo asignado dentro de la condicional el bot efectuará una respuesta hacia el usuario quien dijo el Keyword */
-client.on('message', msg => {
-  if (msg.content === 'ya duermanse' || msg.content === 'Ya duermanse' || msg.content === 'Ya Duermanse' || msg.content === 'YA DUERMANSE' || msg.content === 'ya duermase' || msg.content === 'Ya duermase' || msg.content === 'Ya Duermase' || msg.content === 'YA DUERMASE')  {
-      msg.reply(random_item(items));
-  }
-});
-
-client.on('message', async message => {
-  if (!message.guild) return;
-  if (message.content === 'unetenos ayuwoki') {
-    if (message.member.voice.channel) {
-      message.reply('No se que voy a hacer conectado contigo pero dale...xD');
-      const connection = await message.member.voice.channel.join();
-    } else {
-      message.reply('Necesitas unirte a un canal de voz primero crack!');
-    }
-  }
-});
-
-client.on('message', async message => {
-  if (!message.guild) return;
-  if (message.content === 'sacate alv') {
-    if (message.member.voice.channel) {
-      message.reply('HE HE');
-      const connection_leave = await message.member.voice.channel.leave();
-    } else {
-      message.reply('Al menos dimelo cuando estemos dentro del canal de voz');
-    }
-  }
+  client.user.setActivity('lo que haces', { type: 'WATCHING' })
+  .then(presence => console.log(`Activity set to ${presence.activities[0].name}`))
+  .catch(console.error);
+  //console.log('Bot Enabled');
 });
 
 client.on('message', message => {
-  if (message.content === 'muestrame mi avatar') {
-    // Send the user's avatar URL
-    message.reply(message.author.displayAvatarURL());
-  }
+   if(!message.content.startsWith(prefix) || message.author.bot) return;
+   
+   const args = message.content.slice(prefix.length).split(/ +/);
+   const command = args.shift().toLowerCase();
+   
+   if(command === 'ping'){
+       client.commands.get('ping').execute(message, args);
+   }
+   
+   else if(command === 'comandos'){
+       client.commands.get('ayuda').execute(message, args, Discord);
+   }
+  /*
+   else if(command === 'yaDuermanse'){
+       client.commands.get('respuesta01').execute(message, args);
+   }
+
+   else if(command === '<:PeepoPing:672448869661147186>'){
+       client.commands.get('ping_emoji').execute(message, args, Discord);
+   }
+
+   else if(command === 'avatar'){
+       client.commands.get('avatar').execute(message, args);
+   }
+
+   else if(command === 'genshi'){
+       client.commands.get('genshi').execute(message, args, Discord);
+   }
+
+   else if(command === 'sorprendeme'){
+       client.commands.get('respuesta02').execute(message, args, Discord);
+   }
+
+   else if(command === '<:peepoPANTIES:672448870218989577>'){
+       client.commands.get('special').execute(message, args, Discord);
+   }
+  */
 });
 
-
-client.on('message', message => {
-  if (message.content === 'Ayuwoki a ver saca algo de genshi impact') {
-    const attachment = new Discord.MessageAttachment('https://i.imgur.com/o9hA330.png');
-    message.reply('Hay te va');
-    message.reply('Que opinas?');
-    message.channel.send(attachment);
-  } else if (message.content === 'Ayuwoki sacate algo de lo qu tu sabes....') {
-      let url_pass = random_image(itemx);
-      const attachment_nfsw = new Discord.MessageAttachment(url_pass);
-      message.reply('Yo no se de que me estas hablando.....ahhh ya...... lo que sabemos');
-      message.reply('Hay te va pues');
-      message.channel.send(attachment_nfsw);  
-  }
-});
-
-
-client.login();
-
+client.login(mySecret);
