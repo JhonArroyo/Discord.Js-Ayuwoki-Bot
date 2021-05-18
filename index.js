@@ -68,15 +68,15 @@ client.on('message', message => {
    else if(command === 'comandos'){
        client.commands.get('ayuda').execute(message, args, Discord);
    }
-  /*
-   else if(command === 'yaDuermanse'){
+
+   else if(command === 'yaduermanse'){
        client.commands.get('respuesta01').execute(message, args);
    }
 
-   else if(command === '<:PeepoPing:672448869661147186>'){
-       client.commands.get('ping_emoji').execute(message, args, Discord);
+   else if(command === 'peepoping'){
+       client.commands.get('pemoji').execute(message, args);
    }
-
+  
    else if(command === 'avatar'){
        client.commands.get('avatar').execute(message, args);
    }
@@ -84,15 +84,27 @@ client.on('message', message => {
    else if(command === 'genshi'){
        client.commands.get('genshi').execute(message, args, Discord);
    }
-
+  
    else if(command === 'sorprendeme'){
        client.commands.get('respuesta02').execute(message, args, Discord);
    }
 
-   else if(command === '<:peepoPANTIES:672448870218989577>'){
+   else if(command === 'panties'){
        client.commands.get('special').execute(message, args, Discord);
    }
-  */
+
+   else if(command === 'limpiar'){
+       client.commands.get('clear').execute(message, args);
+   }
+
+   else if(command === 'reproduce'){
+       client.commands.get('play').execute(message, args);
+   }
+
+   else if(command === 'detente'){
+       client.commands.get('leave').execute(message, args);
+   }
+
 });
 
 client.login(mySecret);
