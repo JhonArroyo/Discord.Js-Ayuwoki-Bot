@@ -34,19 +34,22 @@ for(const file of commandFiles){
 client.once('ready', () => {
   /** Bloque interno de mencion @everyone por DREYG */
   setInterval(() => {
-    var solitochannel = client.channels.cache.get('672441940675002407');
+    // 774077217654702082 (general mi canal) 
+    // 721181006752776283 (general solitos) *
+    var solitochannel = client.channels.cache.get('721181006752776283');
+    function frasesGen(frases_random) {
+      return frases_random[Math.floor(Math.random()*frases_random.length)];
+    }
+    frases_random = [
+      "https://media0.giphy.com/media/26n6Wb0bIuuWY0yXK/giphy.gif?cid=ecf05e47g7qy9hlq8c924w4gzlgw3rvshi6yx5ynum296ph8&rid=giphy.gif&ct=g",
+      "https://media4.giphy.com/media/M9C8PHLkh0hQxraaLG/giphy.gif?cid=790b76116d3552c35e687c079332402cce2996100ccb9195&rid=giphy.gif&ct=g",
+      "_NO SE HAGAN LA PAJA CHICOS QUE ESO ES MALO.....ATT: EDGAR_<:peepoPANTIES:672448870218989577>"
+    ];
     const mention_init = '@everyone' 
-    const text = '_NO SE HAGAN LA PAJA CHICOS QUE ESO ES MALO.....ATT: EDGAR_<:peepoPANTIES:672448870218989577>';
+    const text = frasesGen(frases_random);
     solitochannel.send(mention_init + text)
-  }, 21600*1000);
+  }, 42600*1000);
 
-  /** Bloque interno de mencion @everyone pora  recordar el uso del comando personalizado de help*/
-  setInterval(() => {                                 
-    var solitochannel_hep = client.channels.cache.get('843623327904956436');
-    const mention_help = '@everyone' 
-    const text_help = '_Si se te olvido de como pedirme ayuda para saber como hablarme tan solo escribeme el siguiente comando **.comandos** y yo te arrojaré el listado...ATT: OBO_';
-    solitochannel_hep.send(mention_help + text_help)
-  }, 1800*1000);
 
   console.log(`Conectado como ${client.user.tag}!`);
   client.user.setActivity('lo que haces', { type: 'WATCHING' })
@@ -105,6 +108,11 @@ client.on('message', message => {
        client.commands.get('leave').execute(message, args);
    }
 
+   else if(command === 'vscode'){
+       client.commands.get('vscode').execute(message, args, Discord);
+   }
+
 });
 
 client.login(mySecret);
+
