@@ -31,7 +31,7 @@ module.exports = {
 			       connection.play(stream, {seek: 0, volume: 1})
 			       .on('finish', () => {
 			  	       voiceChannel.leave();
-				         message.channel.send('HE HE! Dejando el canal de voz....');
+				         message.channel.send('**HE HE! Dejando el canal de voz....**');
 			         });
 			
 			       await message.reply(':thumbsup: Reproduciendo **Tu Link**')
@@ -55,6 +55,7 @@ module.exports = {
 			           connection.play(stream, {seek: 0, volume: 1})
 			           .on('finish', ()=> {
 				             voiceChannel.leave();
+                     message.channel.send('HE HE! Dejando el canal de voz....');
 			             });
 			
 			             await message.reply(`:thumbsup: Ahora Reproduciendo ***${video.title}***`);

@@ -12,7 +12,7 @@ module.exports = {
             {name: '.avatar', value: '_Muestra tu imagen que esta siendo utilizado en tu perfil_'},
             {name: '.genshi', value: '_Muestra alguna imagen de genshi impact **En desarrollo**_'},
             {name: '.sorprendeme', value: '_Solo te puedo decir que si ingresas el comando alguna imagen te mostrará_'},
-            {name: '.ping', value: '_Te respondera con un pong_'},
+            {name: '.ping', value: '_Te respondera con un pong de la latencia_'},
             {name: '.peepoping', value: '**Version mejorada** _Te respondera pong si le das el emoji relacionado con ping_'},
             {name: '.panties', value: '_Supongo que si pones un emoji de panties...¿Esperas al menos un gif? **En desarrollo**_'},
             {name: '.limpiar', value: '_**.limpiar <numero>:** Te permitira borrar una cantidad de mensajes **En Desarrollo**_'},
